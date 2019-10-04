@@ -331,6 +331,10 @@
 		\begin{itemize}
 			\item Project Venona
 			\item MS-PPTP
+			\begin{itemize}
+				\item Have one key for interaction between server and client
+				\item Another one between client and server
+			\end{itemize}
 			\item 802.11b WEP
 			\begin{itemize}
 				\item \includegraphics[scale=0.5]{Wep}
@@ -339,7 +343,17 @@
 				\item On some 802.11 cards: IV resets to 0 after power cycle
 				\item Avoid related keys
 			\end{itemize}
+			\item Disk encryption (one-time pad does not work)
+			\begin{itemize}
+				\item As you make changes to a file, the encrypted contents can leak as a hacker can figure out where in memory those changes were made
+			\end{itemize}
 		\end{itemize}
+	\end{itemize}
+	\item Attack 2: OTP provides no integrity, is malleable
+	\begin{itemize}
+		\item (m $\oplus$ k) $\oplus$ p (p is the message used by the hacker)
+		\item Decrypting the previous expression will yield m $\oplus$ p
+		\item OTP is malleable because it is easy to change ciphertext
 	\end{itemize}
 \end{itemize}
 \end{document}
