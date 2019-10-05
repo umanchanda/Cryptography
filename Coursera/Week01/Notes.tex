@@ -356,4 +356,44 @@
 		\item OTP is malleable because it is easy to change ciphertext
 	\end{itemize}
 \end{itemize}
+\subsection{Real World Stream Ciphers}
+\begin{itemize}
+	\item Old Example 1: RC4
+	\begin{itemize}
+		\item Input: variable sized seed
+		\item Expands into 2048 bits, executes very simple loop to generate one byte/round
+		\item Used in HTTPS and WEP
+		\item Weaknesses: bias in initial output, probability of (0,0) is $\frac{1}{{256}^{2}} + \frac{1}{{256}^{3}}$, Related key attacks
+	\end{itemize}
+	\item Old Example 2: CSS(Content Scrambling System)
+	\begin{itemize}
+		\item Badly broken
+		\item Linear feedback shift register
+		\begin{itemize}
+			\item a register that contains cells
+			\item certain taps are in certain cells that feed into an XOR
+			\item at every clock cycle register shifts to the left
+		\end{itemize}
+		\item DVD encryption uses this
+		\item seed = 5 bytes
+	\end{itemize}
+	\item Modern Example: eStream
+	\begin{itemize}
+		\item PRG: $\{0,1\}^{s} * R \rightarrow \{0,1\}^{n}$
+		\item Nonce: a non-repeating value for a given key
+		\item First input is a seed, $R$ is the nonce
+		\item $E(k, m:r) = m \oplus PRG(k; r)$
+		\item the pair $k,r$ is never used more than once
+		\item can reuse the key because $(k,r)$ is unique
+		\item eStream: Salsa20 (SW + HW)
+		\begin{itemize}
+			\item 128,256 bit seed
+			\item 64 bit nonce
+			\item $\{0,1\}^{128 \text{ or } 256} * \{0,1\}^{64} \rightarrow \{0,1\}^{n}$
+			\item $\text{Salsa20(k;r)} := H(k, (r,0)) || H(k, (r,1)) || ...$
+			\item Expand the states into 64 bytes long
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+	
 \end{document}
