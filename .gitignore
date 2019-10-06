@@ -241,6 +241,4 @@ TSWLatexianTemp*
 # generated if using elsarticle.cls
 *.spl
 
-*.png
-
 CourseNotes/
