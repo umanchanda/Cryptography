@@ -395,5 +395,35 @@
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
-	
+\subsection{PRG Security Defs}
+\begin{itemize}
+	\item Let $G:K \rightarrow \{0,1\}^{n}$ be a PRG
+	\item Goal: define what it means that: $[K \leftarrow \kappa, \text{ output G(k)}]$
+	\item This distrubtion of pseudo random string is "indistinguishiable" from a truly uniform distribution
+	\item $[r \leftarrow \{0,1\}^{n}, \text{output r}]$
+	\item Statistical Test
+	\begin{itemize}
+		\item Statistical test on $\{0,1\}^{n}$: an algorithm A s.t. A(x) outputs 0 or 1
+		\item Takes input x and decides whether its random or not
+		\item Examples: 
+		\begin{itemize}
+			\item $A(x) = 1 $ iff $|\#0(x) - \#1(x)| \leq 10 * \sqrt{n}$
+			\item $A(x) = 1 $ iff $|\#00(x) - \frac{n}{4}| \leq 10 * \sqrt{n}$
+			\item $A(x) = 1 $ iff $\text{max\_num\_of\_0(x)} \leq 10 * \sqrt{n}$
+		\end{itemize}
+	\end{itemize}
+	\item Advantage: $Adv_{PRG}[A,G] := |Pr[A(G(k)) = 1] - Pr[A(r) = 1]| \leftarrow [0,1]$
+	\item If the advantage is close to 1, it means that the statistical test behaved differently when we gave it pseudorandom inputs versus random inputs
+	\item If the advantage is close to 0, it means the pseudorandom inputs and random inputs behaved the same (or similarly)
+	\item Supose $G:K \rightarrow \{0,1\}^{n}$ satisfies $msb(G(k)) = 1$ for 2/3rds of the keys in K
+	\begin{itemize}
+		\item Define statistical test A(x) as: $if [\text{msb} = 1 \text{ output 1 else output 0}]$
+		\item Then: $Adv_{PRG} = |Pr[A(G(k)) = 1 - Pr[A(r) = 1]| = \frac{2}{3} - \frac{1}{2} = \frac{1}{6}$
+		\item "A breaks G with advantage 1/6"
+	\end{itemize}
+	\item Secure PRGs: Crypto definition
+	\begin{itemize}
+		\item Def: We say that $G:K \rightarrow \{0,1\}^{n}$ is a \textbf{secure PRG} if
+	\end{itemize}
+\end{itemize}
 \end{document}
