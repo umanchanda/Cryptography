@@ -423,7 +423,38 @@
 	\end{itemize}
 	\item Secure PRGs: Crypto definition
 	\begin{itemize}
-		\item Def: We say that $G:K \rightarrow \{0,1\}^{n}$ is a \textbf{secure PRG} if
+		\item Def: We say that $G:K \rightarrow \{0,1\}^{n}$ is a \textbf{secure PRG} if:
+		\item $\forall \text{ "effcient" statistical tests } A: adv_{PRG}[A,G] \text{is negligible (close to 0)} $
+		\item Are there provably secure PRGs? Unknown
 	\end{itemize}
+	\item A secure PRG is unpredictable
+	\begin{itemize}
+		\item We show that if a PRG is predictable it is insecure
+		\item Suppose A is an efficient algorithm s.t. $pr[A(G(k)) |_{1,...,i} = G(k) |_{i+1}] = \frac{1}{2} + \epsilon$
+		\item for non-negligible $\epsilon$ (EX: $\epsilon = \frac{1}{1000}$)
+		\item Define statistical test B as: $B(x) = [if A(X |_{1,...,i}) = X_{i+1} output 1 else output 0]$
+		\item Give the statistical test a truly random string R what is the probability that it outputs 1; its $\frac{1}{2}$
+		\item Give it a pseudorandom sequence, it is likely to output 1 as $\geq \frac{1}{2} + \epsilon$
+		\item Difference between the two is $\epsilon$
+	\end{itemize}
+	\item An unpredictable PRG is secure
+	\begin{itemize}
+		\item Let $G:K \rightarrow \{0,1\}^{n}$ be PRG
+		\item Yaos Theorem: if $\forall i \in {0,...,n-1} \text{PRG G is unpredictable at position i then G is a secure PRG}$
+		\item If next bit predictors cannot distinguish G from random then no statistical test can
+		\item Suppose a generator where from the last $\frac{n}{2}$ bits of G(k) it is easy to compute the first $\frac{n}{2}$ bits
+		\item Is G predictable? Yes because G is not secure, by Yaos theorem then G is predictable
+	\end{itemize}
+	\item More generally
+	\begin{itemize}
+		\item Let $P_{1}$ and $P_{2}$ be two distributions over $\{0,1\}^{n}$
+		\item By definition P1 and P2 are \textbf{computationally indistinguishiable} (denoted P1 $\approx$ P2)
+		\item If $\forall$ efficient statistical tests  A $|Pr_{P1}[A(x) = 1 - Pr_{P2}[A(x) = 1| < \text{ negligible }$
+		\item EX: a PRG is secure if ${ k \leftarrow K: G(k)} \approx uniform(\{0,1\}^{n})$
+	\end{itemize}
+\end{itemize}
+\subsection{Semantic Security}
+\begin{itemize}
+	\item Test
 \end{itemize}
 \end{document}
