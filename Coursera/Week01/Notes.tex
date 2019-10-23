@@ -455,6 +455,53 @@
 \end{itemize}
 \subsection{Semantic Security}
 \begin{itemize}
-	\item Test
+	\item What is a secure cipher
+	\begin{itemize}
+		\item Attacker's abilities: obtain one ciphertext (for now)
+		\item Possible security requiremnts:
+		\begin{itemize}
+			\item Attempt 1: attacker cannot require secret key
+			\begin{itemize}
+				\item $E(k,m) = m$ encrypt key k with message m just outputs m
+			\end{itemize}
+			\item Attempt 2: attacker cannot recover all of plaintext
+			\begin{itemize}
+				\item $E(k, m_{0} || m_{1}) = m_{0} || E(k,m_{1})$ we encrypt two messages together, outputs the first message but concatenates the encryption of the second message
+				\item Shannon: Ciphertext should reveal no information about the plaintext
+			\end{itemize}
+			\item Shannon's perfect secrecy
+			\begin{itemize}
+				\item $(E,D)$ has perfect secrecy if $\forall m_{0}, m_{1} \in M (|m_{0} = m_{1})$
+				\item If the attacker sees the ciphertext he doesn't know if it came from the distribution of encryptin $m_{0}$ or $m_{1}$
+				\item This is true for all messages of the same length
+				\item The same distributions don't need to be identical but can be similar
+			\end{itemize}
+		\end{itemize}
+		\item Semantic Security
+		\begin{itemize}
+			\item For b=0,1 define experiments Exp(0) and Exp(1) as
+			\item Adversary A: $m_{0}, m_{1} \in M: |m_{0}| = |m_{1}|$ to Challenger b
+			\item Challenger b: $c \leftarrow E(k, m_{b})$
+			\item For b=0,1 $W_{b} := [\text{ event that } Exp(b) = 1]$
+			\item $Adv_{SS}[A,E] := | Pr[W_{0}] - Pr[W_{1}] | \in [0,1]$
+			\item If in both experiemnts, the adversary output 1 with the same probability, he/she wasn't able to distinguish the two experiemnts
+			\item However if they were able to output 1 with different probability then he/she was able to distinguish the two experiments
+		\end{itemize}
+		\item Definition of Semantic Security
+		\begin{itemize}
+			\item E is semantically secure if for all "efficient" A $Adv_{SS}[A,E]$ is negligible for all explicit $m_{0}, m_{1} \in M: {E(k,m_{0} \approx {E(k,m_{1})}}$
+			\item Example 1
+			\begin{itemize}
+				\item Suppose efficient A can always deduce LSB of PT from CT $ \rightarrow E = (E,D)$ is not semantically secure
+				\item $m_{0}, lsb(m_{0}) = 0; m_{1}, lsb(m_{1}), Adv_{ss}[B,E] = |Pr[Exp(0) = 1] - Pr[Exp(1) = 1]| = |0-1| = 1$
+				\item This is a concept of perfect secrecy
+			\end{itemize}
+			\item Example 2
+			\begin{itemize}
+				\item For all A: $Adv_{SS}[A,E] = |Pr[A(k \oplus m_{0}=1)] - Pr[A(k \oplus m_{1}) = 1]| = 0$
+				\item Where $|m_{0}| = |m_{1}|$ therefore the previous example is 0 because the both values are the same
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
 \end{itemize}
 \end{document}
