@@ -14,4 +14,86 @@
 \centering{Week 2 Notes in the Coursera Course on Cryptography}
 \end{abstract}
 
+\section{Block Ciphers}
+\subsection{Overview}
+\begin{itemize}
+    \item Crypto work horse
+    \begin{itemize}
+        \item Block ciphers have two algorithms: E(Encryption) and D(Decryption)
+        \item n bits plaintext input and n bits ciphertext output
+        \item Examples
+        \begin{itemize}
+            \item 3DES. n=64 bits, k=168bits
+            \item AES. n=128bits, k=128,192,256bits
+        \end{itemize}
+    \end{itemize}
+    \item Built by iteration
+    \begin{itemize}
+        \item Key is expanded from $k_{1}$ to $k_{n}$
+        \item for each $k_{i}$, a function $R(k,m)$ (a round function) is applied to the key
+        \item basically you iteratively the message over and over again until you get to the ciphertext
+        \item final output is the ciphertext
+    \end{itemize}
+    \item PRPs and PRFs
+    \begin{itemize}
+        \item PRF: Pseudo Random Function, defined over (K,X,Y)
+        \item K=keyspace, X=inputspace, Y=outputspace
+        \item $F: F \times X \rightarrow Y$
+        \item an efficient algorithm to evaluate $F(k,x)$
+        \item PRP: Pseudo Random Permutation defined over (K,X)
+        \item $E: K \times X \rightarrow X$
+        \item such that:
+        \begin{itemize}
+            \item There exists an efficient deterministic algorithm to evalulate E(k,x)
+            \item The function E(k,.) is one-to-one
+            \item There exists an efficient inversion algorithm D(k,y)
+        \end{itemize}
+    \end{itemize}
+    \item PRP Examples
+    \begin{itemize}
+        \item AES: $K \times X \rightarrow X$ where $K = X = \{0,1\}^{128}$
+        \item 3DES: $K \times X \rightarrow X$ where $X=\{0,1\}^{64}, K = \{0,1\}^{168}$
+        \item Any PRP is also a PRF
+        \item A PRP is a PRF where X=Y and is efficiently invertible
+    \end{itemize}
+    \item Secure PRFs
+    \begin{itemize}
+        \item Let $F: K \times X \rightarrow Y$ be a PRF
+        \item Funs[X,Y] is the set of all functions from X to Y
+        \item $S_{F} = \{ F(k,.) \text{ s.t. } k \in K \} \subseteq Funs[X,Y]$
+        \item A PRF is secure if:
+        \begin{itemize}
+            \item a random function in Funs[X,Y] is indistinguishable from a random function in $S_{F}$
+        \end{itemize}
+        \item Size of $S_{F}$ = Size of $| K |$
+        \item size of $Funs[X,Y]$ = Size $| Y |^{| X |}$
+        \item For AES it would be $2^{128 \times 2^{128}}$
+        \item If an adversary were to try and break the system he would either get the random function or pseudo-random function
+        \item The goal is to make everything look as truly random as possible
+    \end{itemize}
+    \item Question
+    \begin{itemize}
+        \item Assume we have a secure PRF ($F: K \times X \rightarrow \{0,1\}^{128}$)
+        \item Build a new PRF called G, defined as follows:
+        \item $G(k,x) = $\[ \begin{cases} 
+            $0^{128}$ & \text{ if x = 0 and } \\
+            F(k,x) & otherwise \\
+         \end{cases} \]
+         \item Is G a secure PRF? No
+         \item All the adversary has to do is query the function at x=0
+    \end{itemize}
+    \item PRF $\rightarrow$ PRG
+    \begin{itemize}
+        \item Let $F: K \times \{0,1\}^{n}$ be a secure PRF
+        \item Then the following $G: K \rightarrow \{0,1\}^{nt}$ is a secure PRG
+        \item t blocks of n bits each
+        \item $G(k) = F(k,0) || F(k,1) || ... || F(k,t)$, counter mode
+        \item We took the key bit and expanded it n times by t bits
+    \end{itemize}
+\end{itemize}
+\subsection{Data Encryption Standard}
+\begin{itemize}
+    \item test
+\end{itemize}
+
 \end{document}
