@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// HexToBase64 converts a hex string to base64 string
 func HexToBase64(input string) string {
 	bytes, _ := hex.DecodeString(input)
 	return b64.StdEncoding.EncodeToString(bytes)
